@@ -68,6 +68,7 @@ const FormDiv = ({ signup, signupData }) => {
               <input
                 type="email"
                 onChange={handleChange}
+                value={values.email}
                 name="email"
                 placeholder="Email Address"
               />
@@ -106,7 +107,7 @@ const FormDiv = ({ signup, signupData }) => {
               <div>
               {/* <ErrorMsg>{errors.password}</ErrorMsg> */}
               <input
-                type="confirm_password"
+                type="password"
                 onChange={handleChange}
                 name="confirm_password"
                 value={values.confirm_password}

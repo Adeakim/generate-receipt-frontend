@@ -27,7 +27,7 @@ const generateReceiptReducer = (state = initialState, action) => {
         case types.GENERATE_RECEIPT_SUCCESS:
             return {
                 ...state,
-                data: payload.data,
+                data: payload.data.data,
                 loading: false,
                 message:payload.data.message
             }

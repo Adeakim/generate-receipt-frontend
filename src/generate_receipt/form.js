@@ -2,35 +2,57 @@ import { Formik } from "formik";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import ErrorMsg from "./errorMessage";
-import validate from "./validate";
 import generateReceipt from "../redux/actions/generate_receipt.action";
 import { toast, ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const GenerateReceiptForm = ({ generateReceipt,token, generateReceiptData }) => {
+
+const GenerateReceiptForm = ({
+  generateReceipt,
+  generateReceiptData,
+}) => {
   const getgenerateReceiptData = (generateReceiptData, loading) => {
     if (loading && generateReceiptData.message === "success") {
       var check = document.getElementById("check");
+      
       if (check) {
         check.style.display = "";
       }
-      toast.success("receipt generated successful");
       return;
     } else if (loading && generateReceiptData.message === "failure") {
       const err = Object.values(generateReceiptData.errors)[0];
       toast.error(err[0]);
+      setLoading(false)
+      window.location.reload(true)
       return;
     } else {
       return null;
     }
   };
+
+  const GeneratedPdf=()=>{
+    console.log("from pdf",generateReceiptData.data)
+    return(
+    <div>
+      {
+         generateReceiptData && generateReceiptData.data.pdf_url.map((pdf,index)=>{
+          
+             return(
+               <div key={index}> <a href={pdf}>{pdf}</a></div>
+              
+             )
+           })
+      }
+    </div>
+    )}
   let [loading, setLoading] = useState(false);
+  console.log("from page",generateReceiptData.data)
   useEffect(() => {}, [generateReceiptData]);
 
-  const BtnLabel = loading === false ? "Sign Up" : "";
-
+  const BtnLabel = loading === false ? "Generate Receipt" : "";
+  const token = localStorage.getItem('token')
   return (
     <div>
       <div className="cont">
@@ -40,12 +62,11 @@ const GenerateReceiptForm = ({ generateReceipt,token, generateReceiptData }) => 
             address: "",
             mobile_number: "",
             total_amount_payable: "",
-            // message: "",
+            message: "",
           }}
-          validationSchema={validate}
           onSubmit={async (values) => {
             setLoading(true);
-            await generateReceipt(values);
+            await generateReceipt(values,token);
             setLoading(false);
           }}
         >
@@ -54,51 +75,52 @@ const GenerateReceiptForm = ({ generateReceipt,token, generateReceiptData }) => 
               <ToastContainer style={{ zIndex: "10" }} position="bottom-left" />
               <div>
                 <label>Name</label>
-              <input
-                type="text"
-                onChange={handleChange}
-                name="name"
-                placeholder="Full Name"
-                value={values.name}
-                onBlur={handleBlur}
-              />
-              <ErrorMsg>{errors.name}</ErrorMsg>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  name="name"
+                  placeholder="Full Name"
+                  required
+                  value={values.name}
+                  onBlur={handleBlur}
+                />
+                <ErrorMsg>{errors.name}</ErrorMsg>
               </div>
               <div>
-              <label>Mobile Number</label>
-              <input
-                type="text"
-                onChange={handleChange}
-                name="mobile_number"
-                value={values.mobile_number}
-                placeholder="Mobile Number"
-              />
-               <ErrorMsg>{errors.mobile_number}</ErrorMsg>
-               </div>
-               <div>
-               <label>Address</label>
-               <input
-                type="text"
-                onChange={handleChange}
-                name="address"
-                value={values.address}
-                placeholder="Address"
-              />
-              <ErrorMsg>{errors.address}</ErrorMsg>
+                <label>Mobile Number</label>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  required
+                  name="mobile_number"
+                  value={values.mobile_number}
+                  placeholder="Mobile Number"
+                />
+                <ErrorMsg>{errors.mobile_number}</ErrorMsg>
               </div>
               <div>
-              <label>Total Amount Payable</label>
-              <input
-                type="text"
-                onChange={handleChange}
-                name="total_amount_payable"
-                value={values.total_amount_payable}
-                placeholder="Total Amount Payable"
-              />
+                <label>Address</label>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  required
+                  name="address"
+                  value={values.address}
+                  placeholder="Address"
+                />
+                <ErrorMsg>{errors.address}</ErrorMsg>
               </div>
-              <p center="flex-end">
-                Already have an account? &nbsp; <a href="/login">Login</a>{" "}
-              </p>
+              <div>
+                <label>Total Amount Payable</label>
+                <input
+                  type="text"
+                  required
+                  onChange={handleChange}
+                  name="total_amount_payable"
+                  value={values.total_amount_payable}
+                  placeholder="Total Amount Payable"
+                />
+              </div>
               <button type="submit">
                 {" "}
                 {BtnLabel}
@@ -108,14 +130,20 @@ const GenerateReceiptForm = ({ generateReceipt,token, generateReceiptData }) => 
           )}
         </Formik>
       </div>
+      <div>
+        {generateReceiptData.message === "success"? <GeneratedPdf/>:<div>Not found</div>}
+      </div>
       {getgenerateReceiptData(generateReceiptData, loading)}
+      
     </div>
   );
 };
 
 const mapStateToProps = (store) => ({
   generateReceiptData: store.generateReceipt,
-  token: store.login.token,
+  // token: store.login.token,
 });
 
-export default connect(mapStateToProps, { generateReceipt })(GenerateReceiptForm);
+export default connect(mapStateToProps, { generateReceipt })(
+  GenerateReceiptForm
+);

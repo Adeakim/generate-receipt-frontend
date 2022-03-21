@@ -14,7 +14,7 @@ const signupFailed = (payload) => ({
 
 const signup = (payload) => async (dispatch) => {
   try {
-    const res = await request.post("https://receipt-generator-api.herokuapp.com/api/v1/auth/register/", payload);
+    const res = await request.post("/auth/register/", payload);
     console.log(res)
     return dispatch(signupSuccess(res));
   } catch (error) {
