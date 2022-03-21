@@ -7,10 +7,8 @@ import signup from "../redux/actions/auth/signup.action";
 import { toast, ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
-// import "./signup.css"
 import "./signup.css"
 
-// import input from "./input";
 
 const FormDiv = ({ signup, signupData }) => {
   const getSignUpData = (signupData, loading) => {
@@ -20,6 +18,7 @@ const FormDiv = ({ signup, signupData }) => {
         check.style.display = "";
       }
       toast.success("Sign up successful");
+      window.location="/login";
       return;
     } else if (loading && signupData.message === "failure") {
       const err = Object.values(signupData.errors)[0];

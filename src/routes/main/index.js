@@ -29,14 +29,9 @@ const App = () => (
     </div>
   }>
     <Routes>
-      {/* <ProtectedRoute exact path='/generate-receipt' element={<GenerateReceipt/>} /> */}
-      
-      {/* <Route exact path='/generate-receipt' element={<PrivateRoute/>}> */}
+     
       <Route exact path='/generate-receipt' element={<GenerateReceipt/>}/>
-{/* </Route> */}
-
-      {/* <Route exact path='/login' component={Login}/> */}
-      <Route exact path='/signup' element={<SignUp/>} />
+      <Route exact path='/' element={<SignUp/>} />
       <Route exact path='/login' element={<Login/>} />
       
         

@@ -18,9 +18,7 @@ const Login = ({ loginData, login, currentUser, history }) => {
 
   const isAuthenticated = (loginRes, isLogin, currentUser) => {
     if (isLogin && loginRes.message === "success") {
-      // success(history, currentUser);
       toast.success("Login Successful");
-      // history.push('/learn');
     setInterval(function () {
       window.location="/generate-receipt";
     }, 2500)
@@ -50,8 +48,6 @@ const Login = ({ loginData, login, currentUser, history }) => {
                 onSubmit={async (values) => {
                   setIsLogin(false);
                   await login(values);
-                  // const token = localStorage.getItem('token')
-                  // await fetchUser(token)
                   setIsLogin(true);
                 }}
               >
@@ -60,7 +56,6 @@ const Login = ({ loginData, login, currentUser, history }) => {
                     <ToastContainer />
                     <h2>Sign in to your account to continue</h2>
 
-                    {/* <CompressInputField> */}
                     <div>
                       <label>Email</label>
                       <input
@@ -72,14 +67,12 @@ const Login = ({ loginData, login, currentUser, history }) => {
                         onChange={handleChange}
                         className="input"
                       />
-                    {/* </CompressInputField> */}
                     </div>
                     <div>
                       { touched.email && errors.email ?(errors.email):null }
                     </div>
                     <div>
                     <label>Password</label>
-                    {/* <CompressInputField> */}
                       <input
                         placeholder="password"
                         type={"password"}
@@ -90,16 +83,14 @@ const Login = ({ loginData, login, currentUser, history }) => {
                         className="input"
                       />
                      
-                    {/* </CompressInputField> */}
                     <div>
                       { touched.password && errors.password ?(errors.password):null }
                     </div>
                     </div>
                     <p className="flex-end">
-                      Don't Have an Account? <Link to="/signup"> Sign Up</Link>
+                      Don't Have an Account? <Link to="/"> Sign Up</Link>
                     </p>
 
-                    {/* <Position÷Button> */}
                       <button type="submit">
                         {loginData.loading ? (
                           <ClipLoader loading={loginData.loading} />
@@ -107,19 +98,16 @@ const Login = ({ loginData, login, currentUser, history }) => {
                           "Login"
                         )}
                       </button>
-                    {/* </Position÷Button> */}
                   </form>
                 )}
               </Formik>
             </div>
             {isAuthenticated(loginData, isLogin, currentUser)}
-          {/* </form> */}
-          {/* <ImageDiv /> */}
+         
         </div>
       </div>
 
       <div className="footer-container">
-        {/* <Footer /> */}
       </div>
     </div>
   );
