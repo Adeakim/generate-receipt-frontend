@@ -3,24 +3,23 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import ErrorMsg from "./errorMessage";
 import validate from "./validate";
-import signup from "../redux/actions/auth/signup.action";
+import generateReceipt from "../redux/actions/generate_receipt.action";
 import { toast, ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
 
-// import input from "./input";
 
-const FormDiv = ({ signup, signupData }) => {
-  const getSignUpData = (signupData, loading) => {
-    if (loading && signupData.message === "success") {
+const GenerateReceiptForm = ({ generateReceipt,token, generateReceiptData }) => {
+  const getgenerateReceiptData = (generateReceiptData, loading) => {
+    if (loading && generateReceiptData.message === "success") {
       var check = document.getElementById("check");
       if (check) {
         check.style.display = "";
       }
-      toast.success("Sign up successful");
+      toast.success("receipt generated successful");
       return;
-    } else if (loading && signupData.message === "failure") {
-      const err = Object.values(signupData.errors)[0];
+    } else if (loading && generateReceiptData.message === "failure") {
+      const err = Object.values(generateReceiptData.errors)[0];
       toast.error(err[0]);
       return;
     } else {
@@ -28,7 +27,7 @@ const FormDiv = ({ signup, signupData }) => {
     }
   };
   let [loading, setLoading] = useState(false);
-  useEffect(() => {}, [signupData]);
+  useEffect(() => {}, [generateReceiptData]);
 
   const BtnLabel = loading === false ? "Sign Up" : "";
 
@@ -38,15 +37,15 @@ const FormDiv = ({ signup, signupData }) => {
         <Formik
           initialValues={{
             name: "",
-            email: "",
+            address: "",
             mobile_number: "",
-            password: "",
-            message: "",
+            total_amount_payable: "",
+            // message: "",
           }}
           validationSchema={validate}
           onSubmit={async (values) => {
             setLoading(true);
-            await signup(values);
+            await generateReceipt(values);
             setLoading(false);
           }}
         >
@@ -54,6 +53,7 @@ const FormDiv = ({ signup, signupData }) => {
             <form onSubmit={handleSubmit}>
               <ToastContainer style={{ zIndex: "10" }} position="bottom-left" />
               <div>
+                <label>Name</label>
               <input
                 type="text"
                 onChange={handleChange}
@@ -65,15 +65,7 @@ const FormDiv = ({ signup, signupData }) => {
               <ErrorMsg>{errors.name}</ErrorMsg>
               </div>
               <div>
-              <input
-                type="email"
-                onChange={handleChange}
-                name="email"
-                placeholder="Email Address"
-              />
-              <ErrorMsg>{errors.email}</ErrorMsg>
-              </div>
-              <div>
+              <label>Mobile Number</label>
               <input
                 type="text"
                 onChange={handleChange}
@@ -84,6 +76,7 @@ const FormDiv = ({ signup, signupData }) => {
                <ErrorMsg>{errors.mobile_number}</ErrorMsg>
                </div>
                <div>
+               <label>Address</label>
                <input
                 type="text"
                 onChange={handleChange}
@@ -94,25 +87,14 @@ const FormDiv = ({ signup, signupData }) => {
               <ErrorMsg>{errors.address}</ErrorMsg>
               </div>
               <div>
+              <label>Total Amount Payable</label>
               <input
-                type="password"
+                type="text"
                 onChange={handleChange}
-                name="password"
-                value={values.password}
-                placeholder="Password"
+                name="total_amount_payable"
+                value={values.total_amount_payable}
+                placeholder="Total Amount Payable"
               />
-              <ErrorMsg>{errors.password}</ErrorMsg>
-              </div>
-              <div>
-              {/* <ErrorMsg>{errors.password}</ErrorMsg> */}
-              <input
-                type="confirm_password"
-                onChange={handleChange}
-                name="confirm_password"
-                value={values.confirm_password}
-                placeholder="Confirm Password"
-              />
-              <ErrorMsg>{errors.password}</ErrorMsg>
               </div>
               <p center="flex-end">
                 Already have an account? &nbsp; <a href="/login">Login</a>{" "}
@@ -126,13 +108,14 @@ const FormDiv = ({ signup, signupData }) => {
           )}
         </Formik>
       </div>
-      {getSignUpData(signupData, loading)}
+      {getgenerateReceiptData(generateReceiptData, loading)}
     </div>
   );
 };
 
 const mapStateToProps = (store) => ({
-  signupData: store.signup,
+  generateReceiptData: store.generateReceipt,
+  token: store.login.token,
 });
 
-export default connect(mapStateToProps, { signup })(FormDiv);
+export default connect(mapStateToProps, { generateReceipt })(GenerateReceiptForm);

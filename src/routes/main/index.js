@@ -7,7 +7,8 @@ import MyLoader from '../../utils/loader';
 import SignUp from '../../signup';
 import Login from "../../login/login"
 
-// import ProtectedRoute from '../protectedRoute';
+import PrivateRoute from '../protectedRoute';
+import GenerateReceipt from '../../generate_receipt/GenerateReceipt';
 
 // import React from 'react'
 
@@ -28,8 +29,11 @@ const App = () => (
     </div>
   }>
     <Routes>
-      {/* <ProtectedRoute exact path='/dashboard/instructor' component={InstructorDashboard} /> */}
+      {/* <ProtectedRoute exact path='/generate-receipt' element={<GenerateReceipt/>} /> */}
       
+      {/* <Route exact path='/generate-receipt' element={<PrivateRoute/>}> */}
+      <Route exact path='/generate-receipt' element={<GenerateReceipt/>}/>
+{/* </Route> */}
 
       {/* <Route exact path='/login' component={Login}/> */}
       <Route exact path='/signup' element={<SignUp/>} />

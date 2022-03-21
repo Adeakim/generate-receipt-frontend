@@ -20,7 +20,7 @@ const loginFail = (payload) => ({
 const login = (payload) => async (dispatch) => {
   try {
     dispatch(loginStart());
-    const data = await request.post("http://127.0.0.1:8000/api/v1/auth/login", payload);
+    const data = await request.post("https://receipt-generator-api.herokuapp.com/api/v1/auth/login", payload);
     console.log(data)
     return dispatch(loginSuccess(data));
   } catch (error) {
