@@ -6,6 +6,7 @@ import generateReceipt from "../redux/actions/generate_receipt.action";
 import { toast, ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
+import "../signup/signup.css"
 
 
 
@@ -33,14 +34,13 @@ const GenerateReceiptForm = ({
   };
 
   const GeneratedPdf=()=>{
-    console.log("from pdf",generateReceiptData.data)
     return(
     <div>
       {
          generateReceiptData && generateReceiptData.data.pdf_url.map((pdf,index)=>{
           
              return(
-               <div key={index}> <a href={pdf}>{pdf}</a></div>
+               <div key={index}> <a href={pdf} target="_blank" rel="noopener noreferrer">{pdf}</a></div>
               
              )
            })
@@ -71,7 +71,7 @@ const GenerateReceiptForm = ({
           }}
         >
           {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="receipt-container">
               <ToastContainer style={{ zIndex: "10" }} position="bottom-left" />
               <div>
                 <label>Name</label>

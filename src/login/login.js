@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import LoginSchema from "./validation";
 import login from "../redux/actions/auth/login.action";
+import "../signup/signup.css"
 
 
 
@@ -37,9 +38,8 @@ const Login = ({ loginData, login, currentUser, history }) => {
 
   return (
     <div>
-      <div className="nav-container">
-      </div>
-      <div className="container">
+    
+      <div>
         <div>
           {/* <form> */}
             <div className="form-wrapper">
@@ -56,12 +56,13 @@ const Login = ({ loginData, login, currentUser, history }) => {
                 }}
               >
                 {({ values, errors, handleChange, handleSubmit, touched }) => (
-                  <form onSubmit={handleSubmit} className="form">
+                  <form onSubmit={handleSubmit} className="container">
                     <ToastContainer />
                     <h2>Sign in to your account to continue</h2>
 
                     {/* <CompressInputField> */}
                     <div>
+                      <label>Email</label>
                       <input
                         placeholder="email"
                         type={"email"}
@@ -77,6 +78,7 @@ const Login = ({ loginData, login, currentUser, history }) => {
                       { touched.email && errors.email ?(errors.email):null }
                     </div>
                     <div>
+                    <label>Password</label>
                     {/* <CompressInputField> */}
                       <input
                         placeholder="password"

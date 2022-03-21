@@ -1,0 +1,28 @@
+#cont{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    height: 500px;
+    padding-bottom:10px;
+}
+button{
+    width:150px
+}
+label{
+    padding: 10px;
+}
+.container{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    height: 200px;
+    padding-bottom:10px;
+}
+
+.receipt-container{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    height: 200px;
+    padding-bottom:10px;
+}
