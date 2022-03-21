@@ -1,24 +1,11 @@
 import { Suspense } from 'react'
 import { Routes ,Route } from 'react-router-dom';
 import MyLoader from '../../utils/loader';
-
-// import Login from '../../pages/login/login';
-// import SignUp from '../../signup/form';
 import SignUp from '../../signup';
 import Login from "../../login/login"
 
-import PrivateRoute from '../protectedRoute';
 import GenerateReceipt from '../../generate_receipt/GenerateReceipt';
 
-// import React from 'react'
-
-// function SignUp() {
-//   return (
-//     <div>
-//      <h1>welcome</h1> 
-//     </div>
-//   )
-// }
 
 
 
